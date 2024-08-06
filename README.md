@@ -6,11 +6,11 @@ library offers a base class with convenient methods for safely and
 consistently executing business logic.
 
 ## Features
-* Base Service Class: Provides a common structure for all service objects.
-* Safe Call Method: Adds error handling to service object calls, ensuring a
+* **Base Service Class:** Provides a common structure for all service objects.
+* **Safe Call Method**: Adds error handling to service object calls, ensuring a
 consistent response format.
-* Convenient Class-Level Methods: Allows calling service objects without instantiating them manually.
-* Customizable: Easily subclass and override methods to fit your specific business logic needs.
+* **Convenient Class-Level Methods:** Allows calling service objects without instantiating them manually.
+* **Customizable:** Easily subclass and override methods to fit your specific business logic needs.
 
 ## Installation
 Not yet :)
@@ -53,6 +53,17 @@ begin
   puts "Success: #{result}"
 rescue StandardError => e
   puts "Error: #{e.message}"
+end
+```
+
+It supports pattern matching right out of the gate:
+
+```ruby
+case MyService.call("some arguments")
+  in {success?: true, value: value}
+    puts "Success: #{value}"
+  in {success?: false, error: error}
+   puts "Error: #{error.message}"
 end
 ```
 

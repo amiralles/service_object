@@ -27,6 +27,17 @@ RSpec.describe ServiceObject do
         expect(result.success?).to be(true)
         expect(result.value).to eq(return_value)
       end
+
+      it "supports pattern matching" do
+        return_value = %i[foo bar baz].sample
+
+        case SuccessService.call(return_value)
+          in {success?: true, value: value}
+            expect(value).to eq(return_value)
+          else
+            fail
+        end
+      end
     end
 
     context "when call fails" do
@@ -35,6 +46,16 @@ RSpec.describe ServiceObject do
 
         expect(result.success?).to be(false)
         expect(result.error.message).to eq("Oops :/")
+      end
+      it "supports pattern matching" do
+        return_value = %i[foo bar baz].sample
+
+        case FailureService.call
+          in {success?: false, error: error}
+            expect(error.message).to eq("Oops :/")
+          else
+            fail
+        end
       end
     end
   end
